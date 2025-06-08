@@ -6,6 +6,7 @@
 
 #include "Shader.h"
 #include "Player.h"  // Player 클래스 포함
+#include "Object.h"  // CSplitedUFO 클래스를 포함하기 위해 추가
 
 class CScene
 {

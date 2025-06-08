@@ -209,10 +209,10 @@ void CScene::AnimateObjects(float fTimeElapsed)
 							wsprintf(szDebugString, L"Collision Detected!");
 							OutputDebugString(szDebugString);
 							
-							// 충돌한 UFO를 20개의 작은 UFO로 분열
+							// 충돌한 UFO를 50개의 작은 UFO로 분열
 							for (int k = 0; k < 50; k++)
 							{
-								CGameObject* pNewUfo = new CGameObject();
+								CSplitedUFO* pNewUfo = new CSplitedUFO();
 								pNewUfo->SetMesh(m_ppObjects[i]->GetMesh());
 								pNewUfo->SetShader(m_ppObjects[i]->GetShader());
 								
@@ -227,8 +227,11 @@ void CScene::AnimateObjects(float fTimeElapsed)
 								// 원래 UFO의 색상을 그대로 사용
 								pNewUfo->SetColor(m_ppObjects[i]->GetColor());
 								
-								// 분열된 UFO임을 표시
-								pNewUfo->SetSplitUFO(true);
+								// 랜덤한 방향으로 날아가도록 속도 설정
+								float speedX = ((float)rand() / RAND_MAX - 0.5f) * 30.0f;  // -10 ~ 10 속도
+								float speedY = ((float)rand() / RAND_MAX - 0.5f) * 30.0f;
+								float speedZ = ((float)rand() / RAND_MAX - 0.5f) * 30.0f;
+								pNewUfo->SetVelocity(XMFLOAT3(speedX, speedY, speedZ));
 								
 								newObjects.push_back(pNewUfo);
 							}

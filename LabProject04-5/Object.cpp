@@ -182,4 +182,27 @@ void CBulletObject::Animate(float fTimeElapsed)
 	CGameObject::Animate(fTimeElapsed);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+CSplitedUFO::CSplitedUFO()
+{
+	m_bSplitUFO = true;
+}
+
+CSplitedUFO::~CSplitedUFO()
+{
+}
+
+void CSplitedUFO::Animate(float fTimeElapsed)
+{
+	// 현재 위치에 속도를 더해서 이동
+	XMFLOAT3 position = GetPosition();
+	position.x += m_xmf3Velocity.x * fTimeElapsed;
+	position.y += m_xmf3Velocity.y * fTimeElapsed;
+	position.z += m_xmf3Velocity.z * fTimeElapsed;
+	SetPosition(position);
+
+	CGameObject::Animate(fTimeElapsed);
+}
+
 

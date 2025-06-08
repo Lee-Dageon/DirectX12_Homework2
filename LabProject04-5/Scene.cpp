@@ -4,6 +4,7 @@
 
 #include "stdafx.h"
 #include "Scene.h"
+#include <algorithm>
 
 CScene::CScene()
 {
@@ -31,12 +32,12 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	// 총알용 메쉬 초기화 - 별도의 메쉬 생성
 	m_pBulletMesh = new CMesh(pd3dDevice, pd3dCommandList, "Models/UFO.bin", false);
 	m_pBulletMesh->AddRef();  // 참조 카운트 증가
-	
+
 	// 셰이더 생성
 	CPseudoLightingShader *pShader = new CPseudoLightingShader();
 	pShader->CreateShader(pd3dDevice, m_pd3dGraphicsRootSignature);
 	pShader->CreateShaderVariables(pd3dDevice, pd3dCommandList);
-	
+
 	// 총알용 셰이더도 같은 셰이더 사용
 	m_pBulletShader = pShader;
 	m_pBulletShader->AddRef();  // 참조 카운트 증가
@@ -171,26 +172,121 @@ bool CScene::ProcessInput()
 
 void CScene::AnimateObjects(float fTimeElapsed)
 {
+	// 충돌로 생성될 새로운 객체들을 임시 저장할 벡터
+	std::vector<CGameObject*> newObjects;
+	std::vector<int> objectsToRemove;  // 제거할 객체들의 인덱스
+	
 	for (int j = 0; j < m_nObjects; j++)
 	{
 		m_ppObjects[j]->Animate(fTimeElapsed);
 
-		// CBulletObject인 경우 거리 체크
+		// CBulletObject인 경우 충돌 체크 및 거리 체크
 		CBulletObject* pBullet = dynamic_cast<CBulletObject*>(m_ppObjects[j]);
-		if (pBullet && pBullet->IsOutOfRange())
+		if (pBullet)
 		{
-			// j번째 총알을 제거하고 배열 정리
-			delete m_ppObjects[j];
+			// 총알의 위치
+			XMFLOAT3 bulletPos = pBullet->GetPosition();
 			
-			// 마지막 객체를 현재 위치로 이동
-			m_ppObjects[j] = m_ppObjects[m_nObjects - 1];
-			m_ppObjects[m_nObjects - 1] = nullptr;
-			m_nObjects--;
-			
-			// 인덱스 조정 (같은 위치를 다시 검사하기 위해)
-			j--;
-		
+			// 모든 UFO와 충돌 체크
+			for (int i = 0; i < m_nObjects; i++)
+			{
+				if (i != j)  // 자기 자신은 제외
+				{
+					// UFO인지 확인 (총알이 아닌 객체는 모두 UFO로 가정)
+					if (!dynamic_cast<CBulletObject*>(m_ppObjects[i]) && !m_ppObjects[i]->IsSplitUFO())
+					{
+						XMFLOAT3 ufoPos = m_ppObjects[i]->GetPosition();
+						
+						// 간단한 거리 기반 충돌 체크 (임시로 5.0f를 충돌 범위로 설정)
+						float dx = bulletPos.x - ufoPos.x;
+						float dy = bulletPos.y - ufoPos.y;
+						float dz = bulletPos.z - ufoPos.z;
+						float distance = sqrt(dx*dx + dy*dy + dz*dz);
+						
+						if (distance < 5.0f)  // 충돌 발생
+						{
+							WCHAR szDebugString[256];
+							wsprintf(szDebugString, L"Collision Detected!");
+							OutputDebugString(szDebugString);
+							
+							// 충돌한 UFO를 20개의 작은 UFO로 분열
+							for (int k = 0; k < 50; k++)
+							{
+								CGameObject* pNewUfo = new CGameObject();
+								pNewUfo->SetMesh(m_ppObjects[i]->GetMesh());
+								pNewUfo->SetShader(m_ppObjects[i]->GetShader());
+								
+								// 원래 위치에서 약간씩 랜덤하게 위치 설정
+								float offsetX = ((float)rand() / RAND_MAX - 0.5f) * 2.0f;
+								float offsetY = ((float)rand() / RAND_MAX - 0.5f) * 2.0f;
+								float offsetZ = ((float)rand() / RAND_MAX - 0.5f) * 2.0f;
+								
+								pNewUfo->SetPosition(ufoPos.x + offsetX, ufoPos.y + offsetY, ufoPos.z + offsetZ);
+								pNewUfo->SetScale(0.1f, 0.1f, 0.1f);  // 크기를 0.1배로
+								
+								// 원래 UFO의 색상을 그대로 사용
+								pNewUfo->SetColor(m_ppObjects[i]->GetColor());
+								
+								// 분열된 UFO임을 표시
+								pNewUfo->SetSplitUFO(true);
+								
+								newObjects.push_back(pNewUfo);
+							}
+							
+							// 충돌한 UFO와 총알을 제거 목록에 추가
+							objectsToRemove.push_back(i);
+							objectsToRemove.push_back(j);
+							
+							// 한 총알이 여러 UFO와 충돌하지 않도록 break
+							break;
+						}
+					}
+				}
+			}
+
+			// 기존의 거리 체크 로직
+			if (pBullet->IsOutOfRange())
+			{
+				objectsToRemove.push_back(j);
+			}
 		}
+	}
+	
+	// 중복 제거를 위해 정렬하고 유니크하게 만들기
+	std::sort(objectsToRemove.begin(), objectsToRemove.end());
+	objectsToRemove.erase(std::unique(objectsToRemove.begin(), objectsToRemove.end()), objectsToRemove.end());
+	
+	// 뒤에서부터 제거 (인덱스가 변경되지 않도록)
+	for (int i = objectsToRemove.size() - 1; i >= 0; i--)
+	{
+		int idx = objectsToRemove[i];
+		delete m_ppObjects[idx];
+		m_ppObjects[idx] = m_ppObjects[m_nObjects - 1];
+		m_ppObjects[m_nObjects - 1] = nullptr;
+		m_nObjects--;
+	}
+	
+	// 새로운 객체들 추가
+	if (newObjects.size() > 0)
+	{
+		CGameObject** ppNewObjects = new CGameObject*[m_nObjects + newObjects.size()];
+		
+		// 기존 객체들 복사
+		for (int i = 0; i < m_nObjects; i++)
+		{
+			ppNewObjects[i] = m_ppObjects[i];
+		}
+		
+		// 새로운 객체들 추가
+		for (int i = 0; i < newObjects.size(); i++)
+		{
+			ppNewObjects[m_nObjects + i] = newObjects[i];
+		}
+		
+		// 기존 배열 삭제하고 새 배열로 교체
+		delete[] m_ppObjects;
+		m_ppObjects = ppNewObjects;
+		m_nObjects += newObjects.size();
 	}
 }
 

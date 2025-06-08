@@ -184,17 +184,17 @@ void CBulletObject::Animate(float fTimeElapsed)
 
 void CSplitUFOObject::Animate(float fTimeElapsed)
 {
-	// 현재 위치에 속도 * 시간을 더해서 새로운 위치 계산
-	XMFLOAT3 xmf3Position = GetPosition();
-	float fDistance = fTimeElapsed * 20.0f;  // 총알보다는 좀 더 천천히 이동
-	
-	xmf3Position.x += m_xmf3Velocity.x * fDistance;
-	xmf3Position.y += m_xmf3Velocity.y * fDistance;
-	xmf3Position.z += m_xmf3Velocity.z * fDistance;
-	
-	SetPosition(xmf3Position);
+    // 현재 위치에 속도 * 시간을 더해서 새로운 위치 계산
+    XMFLOAT3 xmf3Position = GetPosition();
+    float fDistance = fTimeElapsed * 20.0f;  // 총알보다는 좀 더 천천히 이동
+    
+    xmf3Position.x += m_xmf3Velocity.x * fDistance;
+    xmf3Position.y += m_xmf3Velocity.y * fDistance;
+    xmf3Position.z += m_xmf3Velocity.z * fDistance;
+    
+    SetPosition(xmf3Position);
 
-	CGameObject::Animate(fTimeElapsed);
+    CGameObject::Animate(fTimeElapsed);
 }
 
 

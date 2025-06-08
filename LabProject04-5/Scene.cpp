@@ -48,38 +48,37 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		OutputDebugString(L"Failed to initialize Bullet Mesh or Shader!\n");
 #endif
 
-	m_nObjects = 5;  // 다시 5개로 변경 (총알은 동적 생성)
+	m_nObjects = 15;  // UFO 10개만 생성
 	m_ppObjects = new CGameObject*[m_nObjects];
 
-	m_ppObjects[0] = new CGameObject();
-	m_ppObjects[0]->SetMesh(pUfoMesh);
-	m_ppObjects[0]->SetShader(pShader);
-	m_ppObjects[0]->SetPosition(6.0f, 0.0f, 13.0f);
-	m_ppObjects[0]->SetColor(XMFLOAT3(0.7f, 0.0f, 0.0f));
+	// 난수 생성을 위한 시드 설정
+	srand((unsigned)time(NULL));
 
-	m_ppObjects[1] = new CGameObject();
-	m_ppObjects[1]->SetMesh(pUfoMesh);
-	m_ppObjects[1]->SetShader(pShader);
-	m_ppObjects[1]->SetPosition(10.0f, -2.0f, 8.0f);
-	m_ppObjects[1]->SetColor(XMFLOAT3(0.0f, 0.7f, 0.0f));
+	// UFO 10개 생성
+	for(int i = 0; i < m_nObjects; i++)
+	{
+		m_ppObjects[i] = new CGameObject();
+		m_ppObjects[i]->SetMesh(pUfoMesh);
+		m_ppObjects[i]->SetShader(pShader);
 
-	m_ppObjects[2] = new CGameObject();
-	m_ppObjects[2]->SetMesh(pUfoMesh);
-	m_ppObjects[2]->SetShader(pShader);
-	m_ppObjects[2]->SetPosition(-5.0f, -4.0f, 11.0f);
-	m_ppObjects[2]->SetColor(XMFLOAT3(0.0f, 0.0f, 0.7f));
+		// 랜덤 위치 설정 (더 넓은 범위로 수정)
+		float x = ((float)rand() / RAND_MAX * 100.0f) - 50.0f;  // -50 ~ 50
+		float y = ((float)rand() / RAND_MAX * 40.0f) - 20.0f;   // -20 ~ 20
+		float z = ((float)rand() / RAND_MAX * 80.0f) + 5.0f;    // 5 ~ 85
 
-	m_ppObjects[3] = new CGameObject();
-	m_ppObjects[3]->SetMesh(pUfoMesh);
-	m_ppObjects[3]->SetShader(pShader);
-	m_ppObjects[3]->SetPosition(-10.0f, -2.0f, 8.0f);
+		// 중앙 근처는 피하도록 조정 (플레이어 주변)
+		if (abs(x) < 10.0f) x += (x < 0) ? -10.0f : 10.0f;
+		if (abs(y) < 5.0f) y += (y < 0) ? -5.0f : 5.0f;
+		if (z < 20.0f) z += 15.0f;
 
-	m_ppObjects[4] = new CGameObject();
-	m_ppObjects[4]->SetMesh(pFlyerMesh);
-	m_ppObjects[4]->SetShader(pShader);
-	m_ppObjects[4]->SetPosition(0.0f, 4.0f, 20.0f);
-	m_ppObjects[4]->Rotate(0.0f, 180.0f, 0.0f);
-	m_ppObjects[4]->SetColor(XMFLOAT3(0.25f, 0.75f, 0.65f));
+		m_ppObjects[i]->SetPosition(x, y, z);
+
+		// 랜덤 색상 설정 (0.3 ~ 1.0 범위로 제한해서 너무 어둡지 않게)
+		float r = ((float)rand() / RAND_MAX * 0.7f) + 0.3f;
+		float g = ((float)rand() / RAND_MAX * 0.7f) + 0.3f;
+		float b = ((float)rand() / RAND_MAX * 0.7f) + 0.3f;
+		m_ppObjects[i]->SetColor(XMFLOAT3(r, g, b));
+	}
 }
 
 ID3D12RootSignature *CScene::CreateGraphicsRootSignature(ID3D12Device *pd3dDevice)

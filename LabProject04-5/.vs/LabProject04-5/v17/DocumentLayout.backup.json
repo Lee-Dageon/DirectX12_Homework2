@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\GameFramework.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:GameFramework.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -15,24 +27,12 @@
       "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:Object.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\GameFramework.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:GameFramework.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\stdafx.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:stdafx.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Mesh.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:Mesh.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,7 +54,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Object.h",
               "DocumentMoniker": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Object.h",
               "RelativeDocumentMoniker": "Object.h",
@@ -62,12 +62,11 @@
               "RelativeToolTip": "Object.h",
               "ViewState": "AgIAAEIAAAAAAAAAAAAAAFcAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-06-08T10:38:56.225Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-08T10:38:56.225Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "stdafx.h",
               "DocumentMoniker": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\stdafx.h",
               "RelativeDocumentMoniker": "stdafx.h",
@@ -79,7 +78,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Mesh.cpp",
               "DocumentMoniker": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Mesh.cpp",
               "RelativeDocumentMoniker": "Mesh.cpp",
@@ -91,44 +90,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Player.cpp",
               "DocumentMoniker": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Player.cpp",
               "RelativeDocumentMoniker": "Player.cpp",
               "ToolTip": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Player.cpp",
               "RelativeToolTip": "Player.cpp",
-              "ViewState": "AgIAAEsAAAAAAAAAAAD4v1YAAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAD4v00AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-08T10:00:58.259Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "Player.h",
               "DocumentMoniker": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Player.h",
               "RelativeDocumentMoniker": "Player.h",
               "ToolTip": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Player.h",
               "RelativeToolTip": "Player.h",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAAAFQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAAAFYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-06-08T09:57:16.263Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "GameFramework.cpp",
               "DocumentMoniker": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\GameFramework.cpp",
               "RelativeDocumentMoniker": "GameFramework.cpp",
               "ToolTip": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\GameFramework.cpp",
               "RelativeToolTip": "GameFramework.cpp",
-              "ViewState": "AgIAAMABAAAAAAAAAAAawM4BAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAMUBAAAAAAAAAAAawNcBAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-08T09:57:13.377Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Object.cpp",
               "DocumentMoniker": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Object.cpp",
               "RelativeDocumentMoniker": "Object.cpp",
@@ -136,21 +135,19 @@
               "RelativeToolTip": "Object.cpp",
               "ViewState": "AgIAAJ8AAAAAAAAAAAAgwLUAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-08T09:47:31.52Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-08T09:47:31.52Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Scene.cpp",
               "DocumentMoniker": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Scene.cpp",
               "RelativeDocumentMoniker": "Scene.cpp",
               "ToolTip": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Scene.cpp",
               "RelativeToolTip": "Scene.cpp",
-              "ViewState": "AgIAAOMAAAAAAAAAAADwv+kAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAawDcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-08T09:47:28.675Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-08T09:47:28.675Z"
             }
           ]
         },

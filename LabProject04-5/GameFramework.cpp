@@ -324,7 +324,11 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 	switch (nMessageID)
 	{
         case WM_LBUTTONDOWN:
+			::SetCapture(hWnd);
+			::GetCursorPos(&m_ptOldCursorPos);
+			break;
         case WM_RBUTTONDOWN:
+			if (m_pScene) m_pScene->CreateBullet();
 			::SetCapture(hWnd);
 			::GetCursorPos(&m_ptOldCursorPos);
 			break;
@@ -346,9 +350,6 @@ bool CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
         case WM_KEYDOWN:
             switch (wParam)
             {
-                case VK_CONTROL:
-                    if (m_pScene) m_pScene->CreateBullet();
-                    break;
                 default:
                     break;
             }
@@ -456,10 +457,10 @@ void CGameFramework::ProcessInput()
     DWORD dwDirection = 0;
     if (::GetKeyboardState(pKeysBuffer))
     {
-        if (pKeysBuffer[VK_UP] & 0xF0) dwDirection |= DIR_FORWARD;
-        if (pKeysBuffer[VK_DOWN] & 0xF0) dwDirection |= DIR_BACKWARD;
-        if (pKeysBuffer[VK_LEFT] & 0xF0) dwDirection |= DIR_LEFT;
-        if (pKeysBuffer[VK_RIGHT] & 0xF0) dwDirection |= DIR_RIGHT;
+        if (pKeysBuffer['W'] & 0xF0) dwDirection |= DIR_FORWARD;
+        if (pKeysBuffer['S'] & 0xF0) dwDirection |= DIR_BACKWARD;
+        if (pKeysBuffer['A'] & 0xF0) dwDirection |= DIR_LEFT;
+        if (pKeysBuffer['D'] & 0xF0) dwDirection |= DIR_RIGHT;
         if (pKeysBuffer[VK_PRIOR] & 0xF0) dwDirection |= DIR_UP;
         if (pKeysBuffer[VK_NEXT] & 0xF0) dwDirection |= DIR_DOWN;
     }
@@ -480,7 +481,7 @@ void CGameFramework::ProcessInput()
 		if (cxDelta || cyDelta)
 		{
 			if (pKeysBuffer[VK_RBUTTON] & 0xF0)
-				m_pPlayer->Rotate(cyDelta, 0.0f, -cxDelta);
+				m_pPlayer->Rotate(0.0f, 0.0f, -cxDelta);
 			else
 				m_pPlayer->Rotate(cyDelta, cxDelta, 0.0f);
 		}

@@ -95,19 +95,3 @@ protected:
 	float m_fMaxTravelDistance = 100.0f;  // 최대 이동 거리 (기본값 100.0f)
 };
 
-// 분열된 UFO를 위한 클래스
-class CSplitUFOObject : public CGameObject
-{
-public:
-	CSplitUFOObject() { m_bSplitUFO = true; }  // 생성 시 자동으로 분열 UFO로 설정
-	virtual ~CSplitUFOObject() {}
-
-	virtual void Animate(float fTimeElapsed);
-	
-	void SetVelocity(XMFLOAT3 xmf3Velocity) { m_xmf3Velocity = xmf3Velocity; }
-	XMFLOAT3 GetVelocity() const { return m_xmf3Velocity; }
-
-protected:
-	XMFLOAT3 m_xmf3Velocity = XMFLOAT3(0.0f, 0.0f, 0.0f);  // UFO의 이동 속도 벡터
-};
-

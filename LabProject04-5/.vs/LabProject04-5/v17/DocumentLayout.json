@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Object.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:Object.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Object.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|solutionrelative:Object.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D175EAE7-29CB-4D35-AECE-BCD8A2FDD6DC}|LabProject04-5.vcxproj|C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -46,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -71,7 +71,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Object.h",
               "DocumentMoniker": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Object.h",
               "RelativeDocumentMoniker": "Object.h",
@@ -159,13 +159,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Scene.cpp",
               "DocumentMoniker": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Scene.cpp",
               "RelativeDocumentMoniker": "Scene.cpp",
               "ToolTip": "C:\\Users\\82105\\Desktop\\LabProject04-5 (1)\\LabProject04-5\\Scene.cpp",
               "RelativeToolTip": "Scene.cpp",
-              "ViewState": "AgIAAMkAAAAAAAAAAAD4v9UAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAMoAAAAAAAAAAAAhwNgAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-08T09:47:28.675Z",
               "EditorCaption": ""

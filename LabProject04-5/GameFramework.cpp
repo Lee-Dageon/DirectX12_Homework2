@@ -345,18 +345,18 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 bool CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 {
-    switch (nMessageID)
-    {
+	switch (nMessageID)
+	{
         case WM_KEYDOWN:
-            switch (wParam)
+			switch (wParam) 
             {
-                default:
-                    break;
-            }
-            break;
-        default:
-            break;
-    }
+			default:
+				break;
+			} 
+			break;
+		default:
+			break;
+	}
     return(false);
 }
 
@@ -453,17 +453,23 @@ void CGameFramework::ReleaseObjects()
 
 void CGameFramework::ProcessInput()
 {
-    static UCHAR pKeysBuffer[256];
-    DWORD dwDirection = 0;
-    if (::GetKeyboardState(pKeysBuffer))
-    {
+	static UCHAR pKeysBuffer[256];
+	DWORD dwDirection = 0;
+	if (::GetKeyboardState(pKeysBuffer))
+	{
         if (pKeysBuffer['W'] & 0xF0) dwDirection |= DIR_FORWARD;
         if (pKeysBuffer['S'] & 0xF0) dwDirection |= DIR_BACKWARD;
         if (pKeysBuffer['A'] & 0xF0) dwDirection |= DIR_LEFT;
         if (pKeysBuffer['D'] & 0xF0) dwDirection |= DIR_RIGHT;
-        if (pKeysBuffer[VK_PRIOR] & 0xF0) dwDirection |= DIR_UP;
-        if (pKeysBuffer[VK_NEXT] & 0xF0) dwDirection |= DIR_DOWN;
-    }
+		if (pKeysBuffer[VK_PRIOR] & 0xF0) dwDirection |= DIR_UP;
+		if (pKeysBuffer[VK_NEXT] & 0xF0) dwDirection |= DIR_DOWN;
+
+		// R 키 감지 추가
+		if (pKeysBuffer['R'] & 0xF0)
+		{
+			if (m_pScene) m_pScene->ExplodeAllUFOs();
+		}
+	}
 
 	float cxDelta = 0.0f, cyDelta = 0.0f;
 	if (GetCapture() == m_hWnd)

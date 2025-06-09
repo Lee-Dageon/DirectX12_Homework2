@@ -102,8 +102,12 @@ public:
 	
 	void SetVelocity(XMFLOAT3 xmf3Velocity) { m_xmf3Velocity = xmf3Velocity; }
 	XMFLOAT3 GetVelocity() const { return m_xmf3Velocity; }
+	
+	bool IsExpired() const { return (m_fLifeTime >= m_fMaxLifeTime); }
 
 protected:
 	XMFLOAT3 m_xmf3Velocity = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	float m_fLifeTime = 0.0f;  // 생성 후 경과 시간
+	const float m_fMaxLifeTime = 6.0f;  // 최대 수명 (6초)
 };
 

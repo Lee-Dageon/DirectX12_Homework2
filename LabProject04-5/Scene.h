@@ -36,6 +36,9 @@ public:
 	// 플레이어 설정 함수 추가
 	void SetPlayer(CPlayer* pPlayer) { m_pPlayer = pPlayer; }
 
+	// 모든 UFO 폭발 함수 추가
+	void ExplodeAllUFOs();
+
 protected:
 	ID3D12RootSignature			*m_pd3dGraphicsRootSignature = NULL;
 
@@ -48,4 +51,11 @@ protected:
 
 	// 플레이어 포인터 추가
 	CPlayer						*m_pPlayer = NULL;
+
+	// 승리 상태를 저장하는 변수 추가
+	bool						m_bGameWon = false;
+	
+	// 승리 타이머 변수 추가
+	float                       m_fVictoryTimer = 0.0f;
+	bool                       m_bVictoryMessageShown = false;
 };

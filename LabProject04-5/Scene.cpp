@@ -8,6 +8,7 @@
 
 CScene::CScene()
 {
+	
 }
 
 CScene::~CScene()
@@ -20,6 +21,11 @@ CScene::~CScene()
 void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList)
 {
 	m_pd3dGraphicsRootSignature = CreateGraphicsRootSignature(pd3dDevice);
+
+	// 게임 상태 초기화
+	m_bGameWon = false;
+	m_fVictoryTimer = 0.0f;
+	m_bVictoryMessageShown = false;
 
 #ifdef _WITH_TEXT_MODEL_FILE
 	CMesh *pUfoMesh = new CMesh(pd3dDevice, pd3dCommandList, "Models/UFO.txt", true);
@@ -49,13 +55,13 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		OutputDebugString(L"Failed to initialize Bullet Mesh or Shader!\n");
 #endif
 
-	m_nObjects = 15;  // UFO 10개만 생성
+	m_nObjects = 20;  // UFO 20개 생성
 	m_ppObjects = new CGameObject*[m_nObjects];
 
 	// 난수 생성을 위한 시드 설정
 	srand((unsigned)time(NULL));
 
-	// UFO 10개 생성
+	// UFO 생성
 	for(int i = 0; i < m_nObjects; i++)
 	{
 		m_ppObjects[i] = new CGameObject();
@@ -63,9 +69,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		m_ppObjects[i]->SetShader(pShader);
 
 		// 랜덤 위치 설정 (더 넓은 범위로 수정)
-		float x = ((float)rand() / RAND_MAX * 100.0f) - 50.0f;  // -50 ~ 50
-		float y = ((float)rand() / RAND_MAX * 40.0f) - 20.0f;   // -20 ~ 20
-		float z = ((float)rand() / RAND_MAX * 80.0f) + 5.0f;    // 5 ~ 85
+		float x = ((float)rand() / RAND_MAX * 300.0f) - 150.0f;  // -150 ~ 150
+		float y = ((float)rand() / RAND_MAX * 80.0f) - 40.0f;   // -40 ~ 40
+		float z = ((float)rand() / RAND_MAX * 200.0f) - 50.0f;    // -50 ~ 150
 
 		// 중앙 근처는 피하도록 조정 (플레이어 주변)
 		if (abs(x) < 10.0f) x += (x < 0) ? -10.0f : 10.0f;
@@ -154,7 +160,6 @@ bool CScene::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam,
 
 bool CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 {
-
 	switch (nMessageID)
 	{
 	case WM_KEYDOWN:
@@ -176,9 +181,39 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	std::vector<CGameObject*> newObjects;
 	std::vector<int> objectsToRemove;  // 제거할 객체들의 인덱스
 	
+	// UFO 카운트 변수 추가
+	int nUfoCount = 0;
+	
+	// 플레이어 위치 가져오기
+	XMFLOAT3 playerPosition;
+	XMFLOAT3 playerPosition = m_pPlayer->GetPosition();
+
 	for (int j = 0; j < m_nObjects; j++)
 	{
+		// UFO인지 확인 (총알이나 파편이 아닌 객체)
+		if (!dynamic_cast<CBulletObject*>(m_ppObjects[j]) && !m_ppObjects[j]->IsSplitUFO())
+		{
+			XMFLOAT3 ufoPosition = m_ppObjects[j]->GetPosition();
+			XMFLOAT3 direction = Vector3::Subtract(playerPosition, ufoPosition);
+			direction = Vector3::Normalize(direction);
+
+			// 속도를 조절하여 서서히 이동
+			float speed = 8.0f * fTimeElapsed; // 속도 조절
+			XMFLOAT3 velocity = Vector3::ScalarProduct(direction, speed);
+			m_ppObjects[j]->SetPosition(Vector3::Add(ufoPosition, velocity));
+
+			nUfoCount++;
+		}
+
 		m_ppObjects[j]->Animate(fTimeElapsed);
+
+		// 파편(SplitedUFO) 객체인 경우 수명 체크
+		CSplitedUFO* pSplitUFO = dynamic_cast<CSplitedUFO*>(m_ppObjects[j]);
+		if (pSplitUFO && pSplitUFO->IsExpired())
+		{
+			objectsToRemove.push_back(j);
+			continue;
+		}
 
 		// CBulletObject인 경우 충돌 체크 및 거리 체크
 		CBulletObject* pBullet = dynamic_cast<CBulletObject*>(m_ppObjects[j]);
@@ -192,7 +227,7 @@ void CScene::AnimateObjects(float fTimeElapsed)
 			{
 				if (i != j)  // 자기 자신은 제외
 				{
-					// UFO인지 확인 (총알이 아닌 객체는 모두 UFO로 가정)
+					// UFO인지 확인 (총알이나 파편이 아닌 객체는 모두 UFO로 가정)
 					if (!dynamic_cast<CBulletObject*>(m_ppObjects[i]) && !m_ppObjects[i]->IsSplitUFO())
 					{
 						XMFLOAT3 ufoPos = m_ppObjects[i]->GetPosition();
@@ -291,6 +326,23 @@ void CScene::AnimateObjects(float fTimeElapsed)
 		m_ppObjects = ppNewObjects;
 		m_nObjects += newObjects.size();
 	}
+
+	// UFO가 모두 사라졌는지 체크 (nUfoCount가 0이면 승리)
+	if (nUfoCount == 0 && !m_bGameWon)
+	{
+		m_bGameWon = true;  // 승리 상태 설정
+	}
+
+	// 승리 후 타이머 업데이트 및 메시지 박스 표시
+	if (m_bGameWon && !m_bVictoryMessageShown)
+	{
+		m_fVictoryTimer += fTimeElapsed;
+		if (m_fVictoryTimer >= 1.0f)  // 2초 후에 메시지 박스 표시
+		{
+			MessageBox(NULL, L"YOU WIN!", L"Victory", MB_OK);
+			m_bVictoryMessageShown = true;
+		}
+	}
 }
 
 void CScene::PrepareRender(ID3D12GraphicsCommandList* pd3dCommandList)
@@ -375,5 +427,85 @@ void CScene::CreateBullet()
 		delete pBulletObject;  // 실패하면 메모리 해제
 		delete[] ppNewObjects;
 	}
+}
+
+void CScene::ExplodeAllUFOs()
+{
+	// 새로운 오브젝트들을 저장할 벡터
+	std::vector<CGameObject*> newObjects;
+	std::vector<int> objectsToRemove;
+
+	// 모든 오브젝트를 순회하면서 UFO 찾기
+	for (int i = 0; i < m_nObjects; i++)
+	{
+		// UFO인지 확인 (총알이나 파편이 아닌 객체)
+		if (!dynamic_cast<CBulletObject*>(m_ppObjects[i]) && !m_ppObjects[i]->IsSplitUFO())
+		{
+			XMFLOAT3 ufoPos = m_ppObjects[i]->GetPosition();
+			
+			// 50개의 파편 생성
+			for (int k = 0; k < 50; k++)
+			{
+				CSplitedUFO* pNewUfo = new CSplitedUFO();
+				pNewUfo->SetMesh(m_ppObjects[i]->GetMesh());
+				pNewUfo->SetShader(m_ppObjects[i]->GetShader());
+				
+				// 원래 위치에서 약간씩 랜덤하게 위치 설정
+				float offsetX = ((float)rand() / RAND_MAX - 0.5f) * 2.0f;
+				float offsetY = ((float)rand() / RAND_MAX - 0.5f) * 2.0f;
+				float offsetZ = ((float)rand() / RAND_MAX - 0.5f) * 2.0f;
+				
+				pNewUfo->SetPosition(ufoPos.x + offsetX, ufoPos.y + offsetY, ufoPos.z + offsetZ);
+				pNewUfo->SetScale(0.1f, 0.1f, 0.1f);  // 크기를 0.1배로
+				
+				// 원래 UFO의 색상을 그대로 사용
+				pNewUfo->SetColor(m_ppObjects[i]->GetColor());
+				
+				// 랜덤한 방향으로 날아가도록 속도 설정
+				float speedX = ((float)rand() / RAND_MAX - 0.5f) * 30.0f;
+				float speedY = ((float)rand() / RAND_MAX - 0.5f) * 30.0f;
+				float speedZ = ((float)rand() / RAND_MAX - 0.5f) * 30.0f;
+				pNewUfo->SetVelocity(XMFLOAT3(speedX, speedY, speedZ));
+				
+				newObjects.push_back(pNewUfo);
+			}
+			
+			// UFO를 제거 목록에 추가
+			objectsToRemove.push_back(i);
+		}
+	}
+
+	// 중복 제거를 위해 정렬하고 유니크하게 만들기
+	std::sort(objectsToRemove.begin(), objectsToRemove.end());
+	objectsToRemove.erase(std::unique(objectsToRemove.begin(), objectsToRemove.end()), objectsToRemove.end());
+
+	// 새로운 크기의 오브젝트 배열 생성
+	int nNewObjects = m_nObjects - objectsToRemove.size() + newObjects.size();
+	CGameObject** ppNewObjects = new CGameObject*[nNewObjects];
+
+	// 제거되지 않는 기존 오브젝트들 복사
+	int currentIndex = 0;
+	for (int i = 0; i < m_nObjects; i++)
+	{
+		if (std::find(objectsToRemove.begin(), objectsToRemove.end(), i) == objectsToRemove.end())
+		{
+			ppNewObjects[currentIndex++] = m_ppObjects[i];
+		}
+		else
+		{
+			delete m_ppObjects[i];  // 제거될 오브젝트 메모리 해제
+		}
+	}
+
+	// 새로운 파편 오브젝트들 추가
+	for (auto& newObj : newObjects)
+	{
+		ppNewObjects[currentIndex++] = newObj;
+	}
+
+	// 기존 배열 삭제하고 새 배열로 교체
+	delete[] m_ppObjects;
+	m_ppObjects = ppNewObjects;
+	m_nObjects = nNewObjects;
 }
 
